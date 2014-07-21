@@ -52,6 +52,18 @@ public class CardTable {
     private void startGame(){
         while (true){
             players.get(0).writeToClient();
+            dealCards();
+        }
+    }
+
+    private void dealCards(){
+        for (int i =0; i<cardDeck.size();){
+            for(int j = 0; j < players.size(); j++){
+                players.get(j).getCardDeck().add(cardDeck.get(i));
+                System.out.print(players.get(j) +" "+ players.get(j).getCardDeck());
+                ++i;
+            }
+            System.out.println();
         }
     }
 

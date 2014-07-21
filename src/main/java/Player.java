@@ -40,6 +40,20 @@ public class Player implements Runnable{
         }
     }
 
+    public void setCardDeck(ArrayList<Integer> cards){
+        this.cardDeck = cards;
+    }
+
+    public void printCardDeck(){
+        for (int i =0; i <cardDeck.size(); i++){
+            System.out.println(cardDeck.get(i));
+        }
+    }
+
+    public ArrayList<Integer> getCardDeck(){
+        return this.cardDeck;
+    }
+
     @Override
     public void run() {
         try {
