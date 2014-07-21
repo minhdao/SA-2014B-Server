@@ -2,9 +2,7 @@
  * Created by minh on 7/15/14.
  */
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
 
@@ -13,14 +11,16 @@ import java.util.ArrayList;
  * Each player is a thread and should be carefully manage TODO
  **/
 
-public class Player implements Runnable{
+public class Player implements Runnable, Serializable{
 
     private String name;
-    private Socket socket;
-    DataInputStream dis;
-    DataOutputStream dos;
-    private ArrayList<Integer> cardDeck;
+    private transient Socket socket;
+    private transient InputStream is;
+    private transient OutputStream os;
+    private transient ObjectInputStream ois = null;
+    private transient ObjectOutputStream oos = null;
     private ArrayList<Integer> playingCards;
+    private CardDeck cardDeck;
     private boolean isPlaying;
     private boolean isDone;
     private boolean isWaiting;
@@ -28,40 +28,34 @@ public class Player implements Runnable{
     public Player(String name, Socket socket){
         this.name = name;
         this.socket = socket;
-        cardDeck = new ArrayList<Integer>();
+        cardDeck = new CardDeck();
         playingCards = new ArrayList<Integer>();
     }
 
-    public void writeToClient(){
+    public void writeToClient(Object input){
         try {
-            dos.write(1);
+            oos.writeObject(input);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void setCardDeck(ArrayList<Integer> cards){
-        this.cardDeck = cards;
-    }
-
-    public void printCardDeck(){
-        System.out.println(cardDeck.size());
-        for (int i =0; i <cardDeck.size(); i++){
-            System.out.println(cardDeck.get(i));
-        }
-    }
-
-    public ArrayList<Integer> getCardDeck(){
+    public CardDeck getCardDeck(){
         return this.cardDeck;
+    }
+
+    public ObjectOutputStream getOos() {
+        return oos;
     }
 
     @Override
     public void run() {
-        try {
-            dis = new DataInputStream(socket.getInputStream());
-            dos = new DataOutputStream(socket.getOutputStream());
 
-            dos.writeUTF("Connected!");
+        try {
+            is = socket.getInputStream();
+            os = socket.getOutputStream();
+            ois = new ObjectInputStream(is);
+            oos = new ObjectOutputStream(os);
         } catch (IOException e) {
             e.printStackTrace();
         }

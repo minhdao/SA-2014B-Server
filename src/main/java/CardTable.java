@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -51,19 +52,29 @@ public class CardTable {
 
     private void startGame(){
         dealCards();
-        while (true){
-            players.get(0).writeToClient();
+        try {
+            players.get(0).getOos().writeObject(players.get(0).getCardDeck());
+            players.get(1).getOos().writeObject(players.get(1).getCardDeck());
+            players.get(2).getOos().writeObject(players.get(2).getCardDeck());
+            players.get(3).getOos().writeObject(players.get(3).getCardDeck());
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+//        for (int i = 0; i < players.size(); i++) {
+//            players.get(i).writeToClient(players.get(i));
+//        }
+//        while (true){
+//            players.get(0).writeToClient();
+//        }
     }
 
     private void dealCards(){
         for (int i =0; i<cardDeck.size();){
             for(int j = 0; j < players.size(); j++){
-                players.get(j).getCardDeck().add(cardDeck.get(i));
+                players.get(j).getCardDeck().getCards().add(cardDeck.get(i));
                 i++;
             }
         }
-        players.get(2).printCardDeck();
     }
 
     public int getPlayerNumber(){
