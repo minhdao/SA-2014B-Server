@@ -45,6 +45,7 @@ public class Player implements Runnable{
     }
 
     public void printCardDeck(){
+        System.out.println(cardDeck.size());
         for (int i =0; i <cardDeck.size(); i++){
             System.out.println(cardDeck.get(i));
         }

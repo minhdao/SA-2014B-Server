@@ -50,9 +50,9 @@ public class CardTable {
     }
 
     private void startGame(){
+        dealCards();
         while (true){
             players.get(0).writeToClient();
-            dealCards();
         }
     }
 
@@ -60,11 +60,10 @@ public class CardTable {
         for (int i =0; i<cardDeck.size();){
             for(int j = 0; j < players.size(); j++){
                 players.get(j).getCardDeck().add(cardDeck.get(i));
-                System.out.print(players.get(j) +" "+ players.get(j).getCardDeck());
-                ++i;
+                i++;
             }
-            System.out.println();
         }
+        players.get(2).printCardDeck();
     }
 
     public int getPlayerNumber(){
