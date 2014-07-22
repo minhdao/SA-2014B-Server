@@ -20,7 +20,6 @@ public class Server {
         ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
 
         final CardTable ct = (CardTable) context.getBean("cardTable");
-        ct.shuffleCards();
 
         try {
             ServerSocket ss = new ServerSocket(18888);

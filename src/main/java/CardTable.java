@@ -50,6 +50,7 @@ public class CardTable {
     }
 
     private void startGame(){
+        shuffleCards();
         dealCards();
         players.get(0).getCommunicator().write(players.get(0).getCardDeck());
     }
