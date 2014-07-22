@@ -15,7 +15,7 @@ public class Player implements Runnable {
 
     private String name;
     private Communicator communicator;
-    private ArrayList<Integer> playingCards;
+    private CardDeck playedCards;
     private CardDeck cardDeck;
 
     public Player(String name, Socket socket){
@@ -28,7 +28,7 @@ public class Player implements Runnable {
             e.printStackTrace();
         }
         cardDeck = new CardDeck();
-        playingCards = new ArrayList<Integer>();
+        playedCards = new CardDeck();
     }
 
 
