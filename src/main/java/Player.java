@@ -43,5 +43,10 @@ public class Player implements Runnable {
     @Override
     public void run() {
         System.out.println(name + " " + "thread started!!!");
+        // keep on listening to the client code
+        while(true){
+            communicator.read();
+            break; // remove this when needed
+        }
     }
 }
