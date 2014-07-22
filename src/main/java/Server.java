@@ -10,12 +10,12 @@ import java.util.ArrayList;
  * Program starts here
  * Threads and sockets for servers are created here
  */
-public class Main {
+public class Server {
 
     private static ArrayList<Thread> game = new ArrayList<Thread>();
 
     public static void main(String[] args) {
-        Main m = new Main();
+        Server m = new Server();
 
         ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
 
