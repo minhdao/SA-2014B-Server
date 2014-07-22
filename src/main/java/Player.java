@@ -14,14 +14,12 @@ import java.util.ArrayList;
 public class Player implements Runnable {
 
     private String name;
-    private transient Socket socket;
     private Communicator communicator;
     private ArrayList<Integer> playingCards;
     private CardDeck cardDeck;
 
     public Player(String name, Socket socket){
         this.name = name;
-        this.socket = socket;
         try {
             communicator = new Communicator(socket,
                     new ObjectInputStream(socket.getInputStream()),
