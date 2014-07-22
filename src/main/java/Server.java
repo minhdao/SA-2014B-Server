@@ -3,6 +3,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.io.IOException;
 import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.ArrayList;
 
 /**
@@ -33,7 +34,8 @@ public class Server {
             // server will only add 4 players into card table
             for (int i = 1; i <= 4;i++){
                 try {
-                    ct.addPlayer(new Player("Player-" + i , serverSocket.accept()));
+                    Socket socket = serverSocket.accept();
+                    ct.addPlayer(new Player("Player-" + i , socket));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
