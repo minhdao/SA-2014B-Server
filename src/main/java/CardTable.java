@@ -31,6 +31,7 @@ public class CardTable {
         }
     }
 
+    // shuffle the cards before the game start
     public void shuffleCards(){
         for (int i = 3; i <= 15; i++){
             int temp = i * 10;
@@ -49,12 +50,7 @@ public class CardTable {
         }
     }
 
-    private void startGame(){
-        shuffleCards();
-        dealCards();
-        players.get(0).getCommunicator().write(players.get(0).getCardDeck());
-    }
-
+    // deal cards to all players
     private void dealCards(){
         for (int i =0; i<cardDeck.size();){
             for(int j = 0; j < players.size(); j++){
@@ -62,5 +58,12 @@ public class CardTable {
                 i++;
             }
         }
+    }
+
+    // this is where the game begins to run
+    private void startGame(){
+        shuffleCards();
+        dealCards();
+        players.get(0).getCommunicator().write(players.get(0).getCardDeck());
     }
 }
