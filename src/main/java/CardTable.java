@@ -62,8 +62,4 @@ public class CardTable {
             }
         }
     }
-
-    public int getPlayerNumber(){
-        return players.size();
-    }
 }
