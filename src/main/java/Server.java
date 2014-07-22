@@ -23,11 +23,16 @@ public class Server {
 
         try {
             ServerSocket ss = new ServerSocket(18888);
-            for (int i = 0; ;i++){
-                ct.addPlayer(new Player("name", ss.accept()));
-            }
         } catch (IOException e) {
             e.printStackTrace();
+        }
+
+        // server will run forever
+        while (true){
+            // server will only add 4 players into card table
+            for (int i = 0; i< 4;i++){
+                ct.addPlayer(new Player("name", ss.accept()));
+            }
         }
     }
 }
