@@ -44,9 +44,9 @@ public class Player implements Runnable {
     public void run() {
         System.out.println(name + " " + "thread started!!!");
         // keep on listening to the client code
-        while(true){
-            communicator.read();
-            break; // remove this when needed
-        }
+//        while(true){
+//            communicator.read();
+//            break; // remove this when needed
+//        }
     }
 }
