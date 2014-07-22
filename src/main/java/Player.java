@@ -11,14 +11,11 @@ import java.util.ArrayList;
  * Each player is a thread and should be carefully manage TODO
  **/
 
-public class Player implements Runnable, Serializable{
+public class Player implements Runnable {
 
     private String name;
     private transient Socket socket;
-    private transient InputStream is;
-    private transient OutputStream os;
-    private transient ObjectInputStream ois = null;
-    private transient ObjectOutputStream oos = null;
+    private Communicator communicator;
     private ArrayList<Integer> playingCards;
     private CardDeck cardDeck;
     private boolean isPlaying;
@@ -28,36 +25,28 @@ public class Player implements Runnable, Serializable{
     public Player(String name, Socket socket){
         this.name = name;
         this.socket = socket;
+        try {
+            communicator = new Communicator(socket,
+                    new ObjectInputStream(socket.getInputStream()),
+                    new ObjectOutputStream(socket.getOutputStream()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         cardDeck = new CardDeck();
         playingCards = new ArrayList<Integer>();
     }
 
-    public void writeToClient(Object input){
-        try {
-            oos.writeObject(input);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     public CardDeck getCardDeck(){
         return this.cardDeck;
     }
 
-    public ObjectOutputStream getOos() {
-        return oos;
+    public Communicator getCommunicator() {
+        return communicator;
     }
 
     @Override
     public void run() {
 
-        try {
-            is = socket.getInputStream();
-            os = socket.getOutputStream();
-            ois = new ObjectInputStream(is);
-            oos = new ObjectOutputStream(os);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }

@@ -52,15 +52,8 @@ public class CardTable {
 
     private void startGame(){
         dealCards();
-        try {
-            players.get(0).getOos().writeObject(players.get(0).getCardDeck());
-            players.get(1).getOos().writeObject(players.get(1).getCardDeck());
-            players.get(2).getOos().writeObject(players.get(2).getCardDeck());
-            players.get(3).getOos().writeObject(players.get(3).getCardDeck());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-//        for (int i = 0; i < players.size(); i++) {
+        players.get(0).getCommunicator().write(players.get(0).getCardDeck());
+        //        for (int i = 0; i < players.size(); i++) {
 //            players.get(i).writeToClient(players.get(i));
 //        }
 //        while (true){
