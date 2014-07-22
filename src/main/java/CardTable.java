@@ -1,3 +1,5 @@
+import com.sun.xml.internal.bind.v2.TODO;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -26,7 +28,8 @@ public class CardTable {
             count++;
         }
 
-        if (count == 4){
+        // TODO should be changed when the game is complete
+        if (count != 0){
             startGame();
         }
     }
@@ -64,6 +67,8 @@ public class CardTable {
     private void startGame(){
         shuffleCards();
         dealCards();
+        Thread thread = new Thread(players.get(0));
+        thread.start();
         players.get(0).getCommunicator().write(players.get(0).getCardDeck());
     }
 }
