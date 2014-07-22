@@ -31,7 +31,7 @@ public class CardTable {
         }
     }
 
-    public void shuffer(){
+    public void shuffleCards(){
         for (int i = 3; i <= 15; i++){
             int temp = i * 10;
             for (int j = 0; j < 4; j++){
@@ -41,7 +41,7 @@ public class CardTable {
         Collections.shuffle(cardDeck);
         int count = 0;
         for (int i = 0; i < 52; i++){
-            System.out.print(cardDeck.get(i)+"            ");
+            System.out.print(cardDeck.get(i)+"\t");
             count++;
             if (count % 4 == 0){
                 System.out.println();
@@ -52,12 +52,6 @@ public class CardTable {
     private void startGame(){
         dealCards();
         players.get(0).getCommunicator().write(players.get(0).getCardDeck());
-        //        for (int i = 0; i < players.size(); i++) {
-//            players.get(i).writeToClient(players.get(i));
-//        }
-//        while (true){
-//            players.get(0).writeToClient();
-//        }
     }
 
     private void dealCards(){
