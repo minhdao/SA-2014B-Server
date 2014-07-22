@@ -45,7 +45,7 @@ public class CardTable {
         Collections.shuffle(cardDeck);
         int count = 0;
         for (int i = 0; i < 52; i++){
-            System.out.print(cardDeck.get(i)+"\t");
+            System.out.print(cardDeck.get(i)+"\t\t");
             count++;
             if (count % 4 == 0){
                 System.out.println();
@@ -55,9 +55,9 @@ public class CardTable {
 
     // deal cards to all players
     private void dealCards(){
-        for (int i =0; i<cardDeck.size();){
-            for(int j = 0; j < 4; j++){
-                players.get(j).getCardDeck().getCards().add(cardDeck.get(i));
+        for (int i =0; i<13;){
+            for(int j = 0; j < players.size(); j++){
+                players.get(j).getCardDeck().getCards().add(this.cardDeck.get(i));
                 i++;
             }
         }
