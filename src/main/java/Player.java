@@ -18,9 +18,6 @@ public class Player implements Runnable {
     private Communicator communicator;
     private ArrayList<Integer> playingCards;
     private CardDeck cardDeck;
-    private boolean isPlaying;
-    private boolean isDone;
-    private boolean isWaiting;
 
     public Player(String name, Socket socket){
         this.name = name;
