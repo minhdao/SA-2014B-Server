@@ -13,6 +13,7 @@ import java.util.ArrayList;
 public class Server {
 
     private static ArrayList<Thread> game = new ArrayList<Thread>();
+    private static ServerSocket serverSocket;
 
     public static void main(String[] args) {
         Server m = new Server();
@@ -22,7 +23,7 @@ public class Server {
         final CardTable ct = (CardTable) context.getBean("cardTable");
 
         try {
-            ServerSocket ss = new ServerSocket(18888);
+            serverSocket = new ServerSocket(18888);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -30,8 +31,12 @@ public class Server {
         // server will run forever
         while (true){
             // server will only add 4 players into card table
-            for (int i = 0; i< 4;i++){
-                ct.addPlayer(new Player("name", ss.accept()));
+            for (int i = 1; i <= 4;i++){
+                try {
+                    ct.addPlayer(new Player("Player-" + i , serverSocket.accept()));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
