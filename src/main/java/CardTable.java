@@ -1,5 +1,3 @@
-import com.sun.xml.internal.bind.v2.TODO;
-
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -56,7 +54,7 @@ public class CardTable {
     // deal cards to all players
     private void dealCards(){
         for (int i =0; i<13;){
-            players.get(j).getCardDeck().getCards().add(this.cardDeck.get(i));
+            players.get(0).getCardDeck().getCards().add(this.cardDeck.get(i));
 //            for(int j = 0; j < players.size(); j++){
 //                players.get(j).getCardDeck().getCards().add(this.cardDeck.get(i));
 //                i++;
