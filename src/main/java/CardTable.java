@@ -77,12 +77,12 @@ public class CardTable {
     // contain logic to determine who the next player is
     private Player getNextPlayer(Player currentPlayer){
 
-        if (currentPlayer.getTurnNumber() < players.size()){
-            return players.get(currentPlayer.getTurnNumber()+1);
+        if (currentPlayer.getTurnNumber()+1 < players.size()){
+            return players.get(currentPlayer.getTurnNumber() + 1);
         }else{
             return players.get(0);
         }
-
+        
     }
 
     // this is where the game begins to run
