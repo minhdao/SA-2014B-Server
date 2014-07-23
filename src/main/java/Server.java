@@ -31,8 +31,8 @@ public class Server {
 
         // server will run forever
         while (true){
-            // server will only add 4 players into card table
-            for (int i = 1; i <= 4;i++){
+            // server will only add 2 players into card table
+            for (int i = 1; i <= 2;i++){
                 try {
                     Socket socket = serverSocket.accept();
                     ct.addPlayer(new Player("Player-" + i , socket));
