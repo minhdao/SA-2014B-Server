@@ -82,7 +82,7 @@ public class CardTable {
         }else{
             return players.get(0);
         }
-        
+
     }
 
     // this is where the game begins to run
