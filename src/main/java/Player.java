@@ -42,6 +42,10 @@ public class Player implements Runnable {
         return communicator;
     }
 
+    public int getTurnNumber() {
+        return turnNumber;
+    }
+
     public String getName() {
         return name;
     }
