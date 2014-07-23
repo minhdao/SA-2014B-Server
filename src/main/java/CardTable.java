@@ -65,15 +65,26 @@ public class CardTable {
         }
     }
 
+    // method to start player threads
+    private void startThreads(){
+        Thread thread;
+        for (int i = 0; i < players.size(); i++){
+            thread = new Thread(players.get(i));
+            thread.start();
+        }
+    }
+
     // this is where the game begins to run
     private void startGame(){
         // shuffle and deal cards to all players
         shuffleCards();
         dealCards();
         // 3 lines below are used to test only
-        Thread thread = new Thread(players.get(0));
-        thread.start();
+//        Thread thread = new Thread(players.get(0));
+//        thread.start();
 //        players.get(0).getCommunicator().write(players.get(0).getCardDeck());
+
+        startThreads();
         // set currentPlayer to be the first one in the array list
         currentPlayer = players.get(0);
         // keep the game alive until some conditions are met
