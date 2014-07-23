@@ -78,7 +78,7 @@ public class CardTable {
         currentPlayer = players.get(0);
         // keep the game alive until some conditions are met
         while (true){
-            currentPlayer.getCommunicator().read(); // wait to read from the current player
+            Object test = currentPlayer.getCommunicator().read(); // wait to read from the current player
             break; // remove when needed
         }
     }
