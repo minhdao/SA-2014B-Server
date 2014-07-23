@@ -78,7 +78,9 @@ public class CardTable {
     private Player getNextPlayer(Player currentPlayer){
 
         if (currentPlayer.getTurnNumber()+1 < players.size()){
-            return players.get(currentPlayer.getTurnNumber() + 1);
+            int next = currentPlayer.getTurnNumber() + 1;
+            System.out.println(next);
+            return players.get(next);
         }else{
             return players.get(0);
         }
@@ -90,12 +92,6 @@ public class CardTable {
         // shuffle and deal cards to all players
         shuffleCards();
         dealCards();
-
-        // 3 lines below are used to test only
-//        Thread thread = new Thread(players.get(0));
-//        thread.start();
-//        players.get(0).getCommunicator().write(players.get(0).getCardDeck());
-
         startThreads();
         // set currentPlayer to be the first one in the array list
         currentPlayer = players.get(0);
@@ -106,12 +102,11 @@ public class CardTable {
                 Test test = (Test) message;
                 System.out.println(test.getMessage());
                 currentPlayer.getCommunicator().write(new Test("hello, " + test.getMessage()));
+                currentPlayer = getNextPlayer(currentPlayer);
             }
 
             // get next player
-            currentPlayer = getNextPlayer(currentPlayer);
             System.out.println(currentPlayer.getName());
-//            break; // remove when needed
         }
     }
 }
