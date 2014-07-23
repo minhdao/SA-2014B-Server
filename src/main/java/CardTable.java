@@ -73,13 +73,18 @@ public class CardTable {
         // 3 lines below are used to test only
         Thread thread = new Thread(players.get(0));
         thread.start();
-        players.get(0).getCommunicator().write(players.get(0).getCardDeck());
+//        players.get(0).getCommunicator().write(players.get(0).getCardDeck());
         // set currentPlayer to be the first one in the array list
         currentPlayer = players.get(0);
         // keep the game alive until some conditions are met
         while (true){
-            Object test = currentPlayer.getCommunicator().read(); // wait to read from the current player
-            break; // remove when needed
+            Object message = currentPlayer.getCommunicator().read(); // wait to read from the current player
+            if (message instanceof Test){
+                Test test = (Test) message;
+                System.out.println(test.getMessage());
+                currentPlayer.getCommunicator().write(new Test("hello, " + test.getMessage()));
+            }
+//            break; // remove when needed
         }
     }
 }
