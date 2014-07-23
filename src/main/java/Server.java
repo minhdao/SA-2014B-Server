@@ -32,10 +32,10 @@ public class Server {
         // server will run forever
         while (true){
             // server will only add 2 players into card table
-            for (int i = 1; i <= 2;i++){
+            for (int i = 0; i < 2;i++){
                 try {
                     Socket socket = serverSocket.accept();
-                    ct.addPlayer(new Player("Player-" + i , socket));
+                    ct.addPlayer(new Player("Player-" + i , socket, i));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

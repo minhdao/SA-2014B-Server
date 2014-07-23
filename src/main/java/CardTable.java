@@ -24,7 +24,6 @@ public class CardTable {
 
         if (players.size() < 2){
             players.add(player);
-            players.get(count).run();
             count++;
         }
 
@@ -55,13 +54,13 @@ public class CardTable {
 
     // deal cards to all players
     private void dealCards(){
-        for (int i =0; i<13;){
-            players.get(0).getCardDeck().getCards().add(this.cardDeck.getCards().get(i));
-//            for(int j = 0; j < players.size(); j++){
-//                players.get(j).getCardDeck().getCards().add(this.cardDeck.get(i));
-//                i++;
-//            }
-            i++;
+        for (int i =0; i<26;){
+//            players.get(0).getCardDeck().getCards().add(this.cardDeck.getCards().get(i));
+            for(int j = 0; j < players.size(); j++){
+                players.get(j).getCardDeck().getCards().add(this.cardDeck.getCards().get(i));
+                i++;
+            }
+//            i++;
         }
     }
 
@@ -111,6 +110,10 @@ public class CardTable {
                 System.out.println(test.getMessage());
                 currentPlayer.getCommunicator().write(new Test("hello, " + test.getMessage()));
             }
+
+            // get next player
+            currentPlayer = getNextPlayer(currentPlayer);
+            System.out.println(currentPlayer.getName());
 //            break; // remove when needed
         }
     }

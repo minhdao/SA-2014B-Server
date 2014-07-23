@@ -17,8 +17,9 @@ public class Player implements Runnable {
     private Communicator communicator;
     private CardDeck playedCards;
     private CardDeck cardDeck;
+    private int turnNumber;
 
-    public Player(String name, Socket socket){
+    public Player(String name, Socket socket, int turnNumber){
         this.name = name;
         try {
             communicator = new Communicator(socket,
@@ -27,6 +28,7 @@ public class Player implements Runnable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        this.turnNumber = turnNumber;
         cardDeck = new CardDeck();
         playedCards = new CardDeck();
     }
@@ -38,6 +40,10 @@ public class Player implements Runnable {
 
     public Communicator getCommunicator() {
         return communicator;
+    }
+
+    public String getName() {
+        return name;
     }
 
     @Override
