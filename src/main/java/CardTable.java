@@ -54,7 +54,7 @@ public class CardTable {
 
     // deal cards to all players
     private void dealCards(){
-        for (int i =0; i<26;){
+        for (int i =0; i<13;){
             for(int j = 0; j < players.size(); j++){
                 players.get(j).getCardDeck().getCards().add(this.cardDeck.getCards().get(i));
                 i++;
