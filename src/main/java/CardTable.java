@@ -22,13 +22,13 @@ public class CardTable {
     // add player into the players array
     public void addPlayer(Player player){
 
-        if (players.size() < 2){
+        if (players.size() < 1){
             players.add(player);
             count++;
         }
 
         // TODO should be changed when the game is complete
-        if (count == 2){
+        if (count == 1){
             startGame();
         }
     }
