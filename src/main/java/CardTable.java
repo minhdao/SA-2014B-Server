@@ -101,6 +101,12 @@ public class CardTable {
                 System.out.println(test.getMessage());
                 currentPlayer.getCommunicator().write(new Test("hello, " + test.getMessage()));
                 currentPlayer = getNextPlayer(currentPlayer);
+            } else if (message instanceof Move){
+                Move move = (Move) message;
+            } else if (message instanceof String){
+                String name = (String) message;
+                currentPlayer.getCommunicator().write(currentPlayer.getCardDeck());
+                currentPlayer = getNextPlayer(currentPlayer);
             }
 
             // get next player
