@@ -1,3 +1,4 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -5,13 +6,13 @@ import java.util.ArrayList;
  * This is the move of the current player
  * Each move is associated with the player and the cards played
  */
-public class Move {
+public class Move implements Serializable {
 
-    private Player player;
-    private ArrayList<Integer> cards;
+    private String playerName;
+    private CardDeck cards;
 
-    public Move(Player player, ArrayList<Integer> cards){
-        this.player = player;
+    public Move(String playerName, CardDeck cards){
+        this.playerName = playerName;
         this.cards = cards;
     }
 }
