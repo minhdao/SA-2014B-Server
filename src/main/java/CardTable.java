@@ -85,6 +85,10 @@ public class CardTable {
 
     }
 
+    private Status validateMove(Move previousMove, Move currentMove){
+        return Status.Valid;
+    }
+
     // this is where the game begins to run
     private void startGame(){
         // shuffle and deal cards to all players
@@ -102,8 +106,10 @@ public class CardTable {
                 currentPlayer.getCommunicator().write(new Test("hello, " + test.getMessage()));
                 currentPlayer = getNextPlayer(currentPlayer);
             } else if (message instanceof Move){
-                Move move = (Move) message;
                 System.out.println("Received move");
+                Move move = (Move) message;
+                Status status = validateMove(move, move);
+                currentPlayer.getCommunicator().write(status);
             } else if (message instanceof String){
                 String name = (String) message;
                 currentPlayer.getCommunicator().write(currentPlayer.getCardDeck());

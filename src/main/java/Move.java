@@ -1,5 +1,4 @@
 import java.io.Serializable;
-import java.util.ArrayList;
 
 /**
  * Created by minh on 7/22/14.

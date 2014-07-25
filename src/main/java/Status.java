@@ -8,6 +8,7 @@
  */
 public enum Status {
     Win,
+    Valid,
     Lose,
     Wait,
     Continue
