@@ -112,7 +112,9 @@ public class CardTable {
                 currentPlayer.getCommunicator().write(status);
             } else if (message instanceof String){
                 String name = (String) message;
+                System.out.println("Hello, " + message);
                 currentPlayer.getCommunicator().write(currentPlayer.getCardDeck());
+                System.out.println("wrote to client");
                 currentPlayer = getNextPlayer(currentPlayer);
             }
 
