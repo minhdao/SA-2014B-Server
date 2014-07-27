@@ -12,6 +12,7 @@ public class CardTable {
     private int count = 0;
     private ArrayList<Player> players;
     private CardDeck cardDeck;
+    private Move previousMove = null;
     private Player currentPlayer;
 
     public CardTable(){
@@ -83,6 +84,19 @@ public class CardTable {
             return players.get(0);
         }
 
+    }
+
+    private Status validateMove(Move move){
+        // the first one to move
+        if (previousMove == null){
+            if (move.getCards().getCards().size() == 1){
+                previousMove = move;
+                return Status.Valid;
+            } else {
+
+            }
+        }
+        return Status.Valid;
     }
 
     // this is where the game begins to run
