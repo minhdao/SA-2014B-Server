@@ -103,6 +103,7 @@ public class CardTable {
                 currentPlayer = getNextPlayer(currentPlayer);
             } else if (message instanceof Move){
                 Move move = (Move) message;
+                System.out.println("Move received");
             } else if (message instanceof String){
                 String name = (String) message;
                 currentPlayer.getCommunicator().write(currentPlayer.getCardDeck());
