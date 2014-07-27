@@ -8,6 +8,7 @@ public class Move implements Serializable{
 
     private String playerName;
     private CardDeck cards;
+    private Status type;
 
     public Move(String playerName, CardDeck cards){
         this.playerName = playerName;
@@ -20,5 +21,13 @@ public class Move implements Serializable{
 
     public CardDeck getCards() {
         return cards;
+    }
+
+    public Status getType() {
+        return type;
+    }
+
+    public void setType(Status type) {
+        this.type = type;
     }
 }
