@@ -10,7 +10,7 @@ public enum Status {
     Win,
     Valid,
     Invalid,
-    PreviousMovedCards,
+    PreviousMove,
     Lose,
     Wait,
     Continue
