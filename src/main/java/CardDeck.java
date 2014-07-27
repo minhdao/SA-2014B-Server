@@ -7,7 +7,6 @@ import java.util.ArrayList;
  */
 public class CardDeck implements Serializable{
 
-    private Status deckType;
 
     private ArrayList<Integer> cards = new ArrayList<Integer>();
 
@@ -15,7 +14,4 @@ public class CardDeck implements Serializable{
         return cards;
     }
 
-    public Status getDeckType() {
-        return deckType;
-    }
 }
