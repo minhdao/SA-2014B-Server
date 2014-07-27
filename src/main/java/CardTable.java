@@ -88,17 +88,17 @@ public class CardTable {
 
     private Status validateMove(Move move){
         // the first one to move
-        if (previousMove == null){
-            if (move.getCards().getCards().size() == 1){
-                move.setType(Status.PreviousMove);
-                previousMove = move;
-                currentPlayer.getCommunicator().write(move); // write previous move back for client code to update
+//        if (previousMove == null){
+//            if (move.getCards().getCards().size() == 1){
+//                move.setType(Status.PreviousMove);
+//                previousMove = move;
+//                currentPlayer.getCommunicator().write(move); // write previous move back for client code to update
                 return Status.Valid;
-            } else {
+//            } else {
 
-            }
-        }
-        return Status.Invalid; // be careful of this
+//            }
+//        }
+//        return Status.Valid; // be careful of this
     }
 
     // this is where the game begins to run
@@ -110,35 +110,45 @@ public class CardTable {
         // set currentPlayer to be the first one in the array list
         currentPlayer = players.get(0);
         // keep the game alive until some conditions are met
+        Object message;
         while (true){
-            Object message = currentPlayer.getCommunicator().read(); // wait to read from the current player
-            if (message instanceof Test){
-                Test test = (Test) message;
-                System.out.println(test.getMessage());
-                currentPlayer.getCommunicator().write(new Test("hello, " + test.getMessage()));
-                currentPlayer = getNextPlayer(currentPlayer);
-            } else if (message instanceof Move){
+
+            message = currentPlayer.getCommunicator().read(); // wait to read from the current player
+
+//            if (message instanceof Test){
+//                Test test = (Test) message;
+//                System.out.println(test.getMessage());
+//                currentPlayer.getCommunicator().write(new Test("hello, " + test.getMessage()));
+//                currentPlayer = getNextPlayer(currentPlayer);
+//            }
+
+            if (message instanceof Move){
                 Move move = (Move) message;
 
                 // code to see what inside a move
-                System.out.println("Move received");
+                System.out.println("------------Move received--------------");
                 System.out.println("Player: " + move.getPlayerName());
-                System.out.println("Cards: ");
+                System.out.print("Cards: ");
                 for (int i =0; i < move.getCards().getCards().size();i++){
-                    System.out.println(move.getCards().getCards().get(i));
+                    System.out.print(move.getCards().getCards().get(i) + " ");
                 }
+                System.out.println();
 
                 // write back status of the move to current player
                 currentPlayer.getCommunicator().write(validateMove(move));
 
-            } else if (message instanceof String){
-                String name = (String) message;
-                currentPlayer.getCommunicator().write(currentPlayer.getCardDeck());
-                currentPlayer = getNextPlayer(currentPlayer);
             }
 
+            if (message instanceof String){
+                String name = (String) message;
+                currentPlayer.getCommunicator().write(currentPlayer.getCardDeck());
+//                currentPlayer = getNextPlayer(currentPlayer);
+            }
+
+//            message = currentPlayer.getCommunicator().read();
+
             // get next player
-            System.out.println(currentPlayer.getName());
+//            System.out.println(currentPlayer.getName());
         }
     }
 }
