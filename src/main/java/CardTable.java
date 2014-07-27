@@ -96,7 +96,7 @@ public class CardTable {
 
             }
         }
-        return Status.Valid;
+        return Status.Invalid; // be careful of this
     }
 
     // this is where the game begins to run
