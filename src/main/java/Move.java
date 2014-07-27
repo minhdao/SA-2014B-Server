@@ -6,10 +6,10 @@ import java.io.Serializable;
  */
 public class Move implements Serializable{
 
-    private Player player;
+    private String player;
     private CardDeck cards;
 
-    public Move(Player player, CardDeck cards){
+    public Move(String player, CardDeck cards){
         this.player = player;
         this.cards = cards;
     }
