@@ -126,6 +126,9 @@ public class CardTable {
                     System.out.println(move.getCards().getCards().get(i));
                 }
 
+                // write back status of the move to current player
+                currentPlayer.getCommunicator().write(validateMove(move));
+
             } else if (message instanceof String){
                 String name = (String) message;
                 currentPlayer.getCommunicator().write(currentPlayer.getCardDeck());
