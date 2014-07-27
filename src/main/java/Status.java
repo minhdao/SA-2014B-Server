@@ -9,6 +9,7 @@
 public enum Status {
     Win,
     Valid,
+    Invalid,
     Lose,
     Wait,
     Continue
