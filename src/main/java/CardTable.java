@@ -90,7 +90,9 @@ public class CardTable {
         // the first one to move
         if (previousMove == null){
             if (move.getCards().getCards().size() == 1){
+                move.setType(Status.PreviousMove);
                 previousMove = move;
+                currentPlayer.getCommunicator().write(move); // write previous move back for client code to update
                 return Status.Valid;
             } else {
 
