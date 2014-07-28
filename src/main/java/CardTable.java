@@ -93,7 +93,11 @@ public class CardTable {
 //                move.setType(Status.PreviousMove);
 //                previousMove = move;
 //                currentPlayer.getCommunicator().write(move); // write previous move back for client code to update
-                return Status.Valid;
+        previousMove = null;
+        previousMove = move;
+        previousMove.setType(Status.PreviousMove);
+        currentPlayer.getCommunicator().write(previousMove);
+        return Status.Valid;
 //            } else {
 
 //            }
@@ -107,6 +111,8 @@ public class CardTable {
         shuffleCards();
         dealCards();
         startThreads();
+        // send card decks back to player
+
         // set currentPlayer to be the first one in the array list
         currentPlayer = players.get(0);
         // keep the game alive until some conditions are met
