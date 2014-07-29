@@ -23,11 +23,12 @@ public class GameDatabase {
     public static GameDatabase getInstance(){
         if (instance == null){
             instance = new GameDatabase();
+            instance.openConnection();
         }
         return instance;
     }
 
-    public void openConnection(){
+    private void openConnection(){
         try {
             Class.forName("org.postgresql.Driver");
             connection = DriverManager.getConnection("jdbc:postgresql://"
