@@ -11,9 +11,11 @@ public class CardTable {
 
     private int count = 0;
     private ArrayList<Player> players;
+    private ArrayList<Integer> two = new ArrayList<Integer>(){{add(150); add(151); add(152); add(153);}};
     private CardDeck cardDeck;
     private Move previousMove = null;
     private Player currentPlayer;
+    private static int type = 1;
 
     public CardTable(){
         players = new ArrayList<Player>();
@@ -23,13 +25,13 @@ public class CardTable {
     // add player into the players array
     public void addPlayer(Player player){
 
-        if (players.size() < 1){
+        if (players.size() < 2){
             players.add(player);
             count++;
         }
 
         // TODO should be changed when the game is complete
-        if (count == 1){
+        if (players.size() == 2){
             startGame();
         }
     }
@@ -55,7 +57,7 @@ public class CardTable {
 
     // deal cards to all players
     private void dealCards(){
-        for (int i =0; i<13;){
+        for (int i =0; i<26;){
             for(int j = 0; j < players.size(); j++){
                 players.get(j).getCardDeck().getCards().add(this.cardDeck.getCards().get(i));
                 i++;
@@ -86,19 +88,128 @@ public class CardTable {
 
     }
 
-    private Status validateMove(Move move){
-        // the first one to move
-//        if (previousMove == null){
-//            if (move.getCards().getCards().size() == 1){
-//                move.setType(Status.PreviousMove);
-//                previousMove = move;
-//                currentPlayer.getCommunicator().write(move); // write previous move back for client code to update
-                return Status.Valid;
-//            } else {
+    private Status validateMove(Move curMove){
+//        previousMove = move;
+//        previousMove.setType(Status.PreviousMove);
 
-//            }
-//        }
-//        return Status.Valid; // be careful of this
+        int curSize = curMove.getCards().getCards().size();
+        if(curSize != 0){
+            //first move of the match
+            if(previousMove == null){
+                if(curSize > 1){
+                    if(checkSame(curMove.getCards(), curSize)){
+                        type = 1;
+                        return confirmMove(curMove);
+                    }else if(checkBlock(curMove.getCards(), curSize)){
+                        type = 2;
+                        return confirmMove(curMove);
+                    }
+                }else{
+                    return confirmMove(curMove);
+                }
+            }
+            //next moves
+            else{
+                int previousSize = previousMove.getCards().getCards().size();
+
+                if(previousSize == curSize){
+                    //compare current to previous move
+                    if(type == 1){
+                        if(checkSame(curMove.getCards(), curSize)){
+                            if(curMove.getCards().getCards().get(curSize-1) - previousMove.getCards().getCards().get(previousSize-1) > 0){
+                                return confirmMove(curMove);
+                            }
+                        }
+                    }else if(type == 2){
+                        if(checkBlock(curMove.getCards(), curSize)){
+                            if(curMove.getCards().getCards().get(curSize-1) - previousMove.getCards().getCards().get(previousSize-1) > 0){
+                                return confirmMove(curMove);
+                            }
+                        }
+                    }else{
+                        if(curMove.getCards().getCards().get(0) - previousMove.getCards().getCards().get(0) > 0){
+                            return confirmMove(curMove);
+                        }
+                    }
+                }//kill 2s
+                else if(two.containsAll(previousMove.getCards().getCards()) && previousSize <= 2){
+                    if(checkSame(curMove.getCards(), curSize) && curSize == 4){
+                        return confirmMove(curMove);
+                    }else if(curSize >= 6 && checkThong(curMove.getCards(), curSize)){
+                        return confirmMove(curMove);
+                    }
+                }else{
+                    return Status.Invalid;
+                }
+            }
+        }
+        return Status.Invalid;
+    }
+
+    //valid moves
+    public Status confirmMove(Move curMove){
+        previousMove = curMove;
+        previousMove.setType(Status.PreviousMove);
+        updatePrevious(previousMove);
+        currentPlayer = getNextPlayer(currentPlayer);
+        currentPlayer.getCommunicator().write(Status.Continue);
+        return Status.Valid;
+    }
+
+    //update previous to all players
+    public void updatePrevious(Move previousMove){
+        for (int i = 0; i < players.size(); i++) {
+            players.get(i).getCommunicator().write(previousMove);
+        }
+    }
+
+    //sort cards
+    public CardDeck sortCards(CardDeck cards){
+        Collections.sort(cards.getCards());
+        return cards;
+    }
+
+    //check same cards block
+    public boolean checkSame(CardDeck cards, int size){
+        int temp = cards.getCards().get(0)/10;
+        for (int i = 0; i < size; i++) {
+            if(cards.getCards().get(i) / 10 != temp){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    //check 3 doi thong
+    public boolean checkThong(final CardDeck cards, int size){
+        int temp = cards.getCards().get(0)/10;
+        for (int i = 0; i < size; i+=2) {
+            if(i+1 < size){
+                if(cards.getCards().get(i+1) - cards.getCards().get(i) <= 3){
+                    int prefix = cards.getCards().get(i) / 10;
+                    if(prefix - temp == 1){
+                        temp++;
+                    }
+                }else{
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    //check continuous block
+    public boolean checkBlock(CardDeck cards, int size){
+        int temp = cards.getCards().get(0)/10;
+        for (int i = 1; i < size; i++) {
+            int prefix = cards.getCards().get(i) / 10;
+            if(prefix - temp == 1){
+                temp++;
+            }else{
+                return false;
+            }
+        }
+        return true;
     }
 
     // this is where the game begins to run
@@ -107,6 +218,10 @@ public class CardTable {
         shuffleCards();
         dealCards();
         startThreads();
+        // send card decks back to player
+        for (int i =0; i<players.size();i++){
+            players.get(i).getCommunicator().write(players.get(i).getCardDeck());
+        }
         // set currentPlayer to be the first one in the array list
         currentPlayer = players.get(0);
         // keep the game alive until some conditions are met
@@ -137,13 +252,20 @@ public class CardTable {
                 // write back status of the move to current player
                 currentPlayer.getCommunicator().write(validateMove(move));
 
+            }else if(message instanceof Status){
+                Status status = (Status)message;
+                if(status == Status.Pass){
+                    currentPlayer.getCommunicator().write(Status.Wait);
+                    currentPlayer = getNextPlayer(currentPlayer);
+                    currentPlayer.getCommunicator().write(Status.Continue);
+                }
             }
 
-            if (message instanceof String){
-                String name = (String) message;
-                currentPlayer.getCommunicator().write(currentPlayer.getCardDeck());
-//                currentPlayer = getNextPlayer(currentPlayer);
-            }
+//            if (message instanceof String){
+//                String name = (String) message;
+//                currentPlayer.getCommunicator().write(currentPlayer.getCardDeck());
+////                currentPlayer = getNextPlayer(currentPlayer);
+//            }
 
 //            message = currentPlayer.getCommunicator().read();
 

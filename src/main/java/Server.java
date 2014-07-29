@@ -30,16 +30,18 @@ public class Server {
         }
 
         // server will run forever
+        int turnNumber = 0;
         while (true){
             // server will only add 2 players into card table
-            for (int i = 0; i < 1;i++){
+//            for (int i = 0; i < 2;i++){
                 try {
                     Socket socket = serverSocket.accept();
-                    ct.addPlayer(new Player("Player-" + i , socket, i));
+                    ct.addPlayer(new Player("Player-" + turnNumber , socket, turnNumber));
+                    turnNumber++;
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-            }
+//            }
         }
     }
 }

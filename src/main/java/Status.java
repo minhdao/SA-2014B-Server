@@ -13,5 +13,6 @@ public enum Status {
     PreviousMove,
     Lose,
     Wait,
-    Continue
+    Continue,
+    Pass
 }
