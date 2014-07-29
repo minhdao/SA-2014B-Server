@@ -153,6 +153,7 @@ public class CardTable {
         updatePrevious(previousMove);
         currentPlayer = getNextPlayer(currentPlayer);
         currentPlayer.getCommunicator().write(Status.Continue);
+        currentPlayer.getCommunicator().write(Status.YourTurn);
         return Status.Valid;
     }
 
@@ -224,6 +225,14 @@ public class CardTable {
         }
         // set currentPlayer to be the first one in the array list
         currentPlayer = players.get(0);
+        currentPlayer.getCommunicator().write(Status.YourTurn);
+//        for (int i = 0; i< players.size(); i++){
+//            if (currentPlayer == players.get(i)){
+//                currentPlayer.getCommunicator().write(Status.YourTurn);
+//            } else {
+//                players.get(i).getCommunicator().write(Status.Wait);
+//            }
+//        }
         // keep the game alive until some conditions are met
         Object message;
         while (true){

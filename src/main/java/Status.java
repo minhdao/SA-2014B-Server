@@ -14,5 +14,6 @@ public enum Status {
     Lose,
     Wait,
     Continue,
-    Pass
+    Pass,
+    YourTurn
 }
