@@ -18,7 +18,6 @@ public class Server {
 
     public static void main(String[] args) {
         Server m = new Server();
-
         ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
 
         final CardTable ct = (CardTable) context.getBean("cardTable");
